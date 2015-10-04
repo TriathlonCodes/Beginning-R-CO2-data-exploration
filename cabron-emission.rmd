@@ -1,0 +1,13 @@
+---
+title: "Co2-emission-exploration"
+author: "Stephanie Hutson"
+date: "October 4, 2015"
+output: html_document
+---
+
+This is a test
+
+```{r}
+  test <- c(1,2,3)
+  print(test)
+```
