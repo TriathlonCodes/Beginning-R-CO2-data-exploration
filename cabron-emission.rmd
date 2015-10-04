@@ -5,9 +5,35 @@ date: "October 4, 2015"
 output: html_document
 ---
 
-This is a test
-
-```{r}
-  test <- c(1,2,3)
-  print(test)
+```{r echo=FALSE}
+  # install.packages('ggplot2')
+  library(ggplot2)
 ```
+Here I will explore co2 emission over 193 countries between 1996 and 2010 
+```{r}
+  carbonData <- read.csv('co2-world-data.csv', header=T )
+  
+  plot(carbonData$Country.Name, carbonData$X1996..YR1996.) 
+  #a basic scatter plot representing the co2 emissions from 
+  ggplot(data=carbonData, aes(X2010..YR2010., X1996..YR1996.)) +
+    geom_point(color='blue', size=4) +
+    ggtitle("Comparing 1996 with 2010") +
+    theme(plot.title = element_text(face='bold')) +
+    xlab('2010') +
+    ylab('1996') +
+    geom_abline(data = lm(carbonData$X1996..YR1996. ~ carbonData$X2010..YR2010.))
+
+  
+  summary(carbonData$X1996..YR1996.)
+  summary(carbonData$X2010..YR2010.)
+  cor.test(carbonData$X1996..YR1996., carbonData$X2010..YR2010.)
+    
+```
+
+
+
+
+
+<b>Sources:</b>
+The data for this exploration comes from The World Bank.
+http://data.worldbank.org/indicator/EN.ATM.CO2E.PC
