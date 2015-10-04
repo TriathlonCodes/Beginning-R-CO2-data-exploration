@@ -1,23 +1,33 @@
 ---
-title: "Co2-Emission-Exploration-Country-Comparison"
+title: "Co2-Emission-Exploration"
 subtitle: "Countries"
 author: "Stephanie Hutson"
 date: "October 4, 2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Here I will explore co2 emissions of individual countries
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r echo=FALSE}
+  carbonData <- read.csv('co2-world-data.csv', header=T )
+  
+  # install.packages("data.table")
+  library(data.table)
+  oldnames = names(carbonData[3:18])
+  newnames = c(1996:2011)
+  setnames(carbonData, old = oldnames, new = as.character(newnames))
+  carbonData <-carbonData[,!(names(carbonData) %in% c("Country.Code"))]
+  
+  countryData <- t(carbonData[,-1])
+  colnames(countryData) <- carbonData$Country.Name
+```
 
 ```{r}
-summary(cars)
+  library(ggplot2)
+  unitedStates <- carbonData[which(carbonData$Country.Name == "United States"),]
+  # ggplot(data = unitedStates, aes(x=newnames, y=unitedStates[3:18])) +
+    # geom_point()
+  ggplot()
+  
 ```
 
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
