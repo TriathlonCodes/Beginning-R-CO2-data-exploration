@@ -1,0 +1,53 @@
+---
+title: "Co2-Emission-Exploration"
+subtitle: "Countries"
+author: "Stephanie Hutson"
+date: "October 4, 2015"
+output: html_document
+---
+
+Here I will explore co2 emissions of individual countries
+
+```{r echo=FALSE}
+  require(rworldmap)
+  
+
+```
+
+```{r}
+  carbonData <- read.csv('co2-world-data.csv', header=T )
+  countries <- as.vector(carbonData$Country.Code)
+  
+  carbonEmissionDF <- data.frame(country = countries,
+                                 YR1996 = carbonData$X1996..YR1996.,
+                                 YR2010 = carbonData$X2010..YR2010.,
+                                 comparison = carbonData$X2010..YR2010. - carbonData$X1996..YR1996.)
+  
+  
+  carbonEmissionMap <- joinCountryData2Map(carbonEmissionDF, 
+                                           joinCode = "ISO3", 
+                                           nameJoinColumn = "country")
+  
+```
+
+```{r}
+  par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+  co2of1996 <- mapCountryData(carbonEmissionMap, 
+                 nameColumnToPlot = "YR1996", 
+                 missingCountryCol = grey(.5)
+                 )
+  co2of2010 <- mapCountryData(carbonEmissionMap, 
+                 nameColumnToPlot = "YR2010", 
+                 missingCountryCol = grey(.5),
+                 numCats = 8
+                 )
+  
+  comparison <- mapCountryData(carbonEmissionMap,
+                               nameColumnToPlot = "comparison",
+                               colourPalette = "heat",
+                               mapTitle = "Comparision 1996 to 2010",
+                               missingCountryCol = grey(.5))
+  
+    
+```
+

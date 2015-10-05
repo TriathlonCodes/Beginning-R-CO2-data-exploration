@@ -1,5 +1,6 @@
 ---
 title: "Co2-emission-exploration"
+subtitle: "Years 1996 and 2010"
 author: "Stephanie Hutson"
 date: "October 4, 2015"
 output: html_document
@@ -65,6 +66,7 @@ But that's not very meaning full. Let's put them next to each other
   ggplot(data=twoYears, aes(twoYears$year, twoYears$yearGroup)) +
     geom_boxplot() + 
     coord_trans(ytrans = "sqrt")
+  
     
   
 ```
