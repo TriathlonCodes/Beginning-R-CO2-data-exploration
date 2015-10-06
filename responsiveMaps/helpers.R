@@ -1,3 +1,4 @@
+
 require(rworldmap)
 # loads data
 carbonData <- read.csv('co2-world-data.csv', header=T)
@@ -48,8 +49,15 @@ emission_map <- function(var, legend.title, min = 0, max=70) {
                  numCats = 16,
                  addLegend = F
                  )
+}
+library(plyr)
 
-
+emission_table <- function(year){
+  table <- data.frame(row.names = c("Highest Emission","Min", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max"))
+  column = paste0("X", year)
+  print(column)
+  table[column] <- c(carbonEmissionDF$country[which(max(carbonEmissionDF[column]) == carbonEmissionDF[column])], summary(carbonEmissionDF[column]))
 }
 
-
+# summary(carbonEmissionDF$X1996)
+# carbonEmissionDF$country[which(max(carbonEmissionDF$X1996) == carbonEmissionDF$X1996)]

@@ -6,14 +6,17 @@ output: html_document
 runtime: shiny
 ---
 
+The 
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, comment="Notes:"}
+## More carbon emission 
 source("responsiveMaps/helpers.R")
 inputPanel(
   
   sliderInput("year", label = "Year",
-              min = 1996, max = 2011, value = 2011)
+              min = 1996, max = 2011, value = 2011),
+  renderTable(emission_table(year = input$year))
+  
 )
 renderPlot({
   par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
