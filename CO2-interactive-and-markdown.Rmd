@@ -1,0 +1,30 @@
+---
+title: "Carbon Dioxide Emission Exploration"
+author: "Stephanie Hutson"
+date: "October 5, 2015"
+output: html_document
+runtime: shiny
+---
+
+The 
+
+```{r, echo=FALSE, comment="Notes from rendering:"}
+source("responsiveMaps/helpers.R")
+inputPanel(
+  
+  sliderInput("year", label = "Year",
+              min = 1996, max = 2011, value = 2011),
+  renderTable(emission_table(year = input$year))
+  
+)
+renderPlot({
+  par(mai=c(0,0,0.2,0),xaxs="i",yaxs="i")
+  plotOutput(emission_map(var = data, legend.title = input$year)  , width="100%", height = "900px")
+  
+})
+
+
+```
+
+Source:
+All data comes from The World Bank (http://data.worldbank.org/indicator/EN.ATM.CO2E.PC)

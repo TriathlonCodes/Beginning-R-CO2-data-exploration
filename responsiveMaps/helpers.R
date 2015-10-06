@@ -1,6 +1,7 @@
+
 require(rworldmap)
 # loads data
-# carbonData <- read.csv('co2-world-data.csv', header=T)
+carbonData <- read.csv('co2-world-data.csv', header=T)
 countries <- as.vector(carbonData$Country.Code)
 
 #gets all years of data
@@ -36,11 +37,7 @@ emission_map <- function(var, legend.title, min = 0, max=70) {
   column <- paste0("X", legend.title)
   pmin <-min(carbonEmissionDF[column])
   pmax <-max(carbonEmissionDF[column])
-  
-  var <- c(min, max)
-  print(var)
-  emissions <- as.integer(cut(var, 70, include.lowest = T, ordered = T))
-  fills <-shades[emissions]
+
 
   column <- paste0("X", legend.title)
   
@@ -49,10 +46,31 @@ emission_map <- function(var, legend.title, min = 0, max=70) {
                  title(main=legend.title),
                  missingCountryCol = grey(.7),
                  colourPalette = shades,
-                 numCats = 16
+                 numCats = 16,
+                 addLegend = F
                  )
-
-
+}
+library(plyr)
+carbonEmissionDF$country[4]
+emission_table <- function(year){
+  column = paste0("X", year)
+  countryHighestID <-which(max(carbonEmissionDF[column]) == carbonEmissionDF[column])
+  countryHighestCode <- carbonEmissionDF$country[countryHighestID]
+  print(countryHighestCode)
+  results <- c(as.character(countryHighestCode), 
+              summary(carbonEmissionDF[column]))
+  t(matrix(c("Country with Highest Emission",
+            "Min", 
+            "1st Qu.", 
+            "Median", 
+            "Mean", 
+            "3rd Qu.", 
+            "Max", results), nrow=7))
+#   column = paste0("X", year)
+#   print(column)
+#   eTable[column] <- c(carbonEmissionDF$country[which(max(carbonEmissionDF[column]) == carbonEmissionDF[column])], 
+  #                     summary(carbonEmissionDF[column]))
 }
 
-
+# summary(carbonEmissionDF$X1996)
+# carbonEmissionDF$country[which(max(carbonEmissionDF$X1996) == carbonEmissionDF$X1996)]
