@@ -8,8 +8,7 @@ runtime: shiny
 
 The 
 
-```{r, echo=FALSE, comment="Notes:"}
-## More carbon emission 
+```{r, echo=FALSE, comment="Notes from rendering:"}
 source("responsiveMaps/helpers.R")
 inputPanel(
   
