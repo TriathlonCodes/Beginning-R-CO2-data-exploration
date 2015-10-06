@@ -6,7 +6,7 @@ output: html_document
 runtime: shiny
 ---
 
-The 
+Global visualizetion of the 
 
 ```{r, echo=FALSE, comment="Notes from rendering:"}
 source("responsiveMaps/helpers.R")
@@ -22,9 +22,8 @@ renderPlot({
   plotOutput(emission_map(var = data, legend.title = input$year)  , width="100%", height = "900px")
   
 })
-
-
 ```
 
 Source:
 All data comes from The World Bank (http://data.worldbank.org/indicator/EN.ATM.CO2E.PC)
+CO2 emission units in are metric tonnes per capita

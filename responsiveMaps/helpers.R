@@ -6,8 +6,6 @@ countries <- as.vector(carbonData$Country.Code)
 
 #gets all years of data
 carbonEmissionDF <- data.frame(country = countries,
-                               "min" <- 0,
-                               "max" <- 70,
                                "1996" = carbonData$X1996..YR1996.,
                                "1997" = carbonData$X1997..YR1997.,
                                "1998" = carbonData$X1998..YR1998.,
@@ -43,12 +41,12 @@ emission_map <- function(var, legend.title, min = 0, max=70) {
   
   map <- mapCountryData(carbonEmissionMap,
                  nameColumnToPlot = column,
-                 title(main=legend.title),
                  missingCountryCol = grey(.7),
                  colourPalette = shades,
                  numCats = 16,
                  addLegend = F
                  )
+  do.call(addMapLegend, c(map, legendWidth = 0.5, legendMar = 2))
 }
 library(plyr)
 carbonEmissionDF$country[4]
@@ -56,16 +54,9 @@ emission_table <- function(year){
   column = paste0("X", year)
   countryHighestID <-which(max(carbonEmissionDF[column]) == carbonEmissionDF[column])
   countryHighestCode <- carbonEmissionDF$country[countryHighestID]
-  print(countryHighestCode)
-  results <- c(as.character(countryHighestCode), 
+  results <- c(paste("Country, Highest Emissions:",as.character(countryHighestCode)), 
               summary(carbonEmissionDF[column]))
-  t(matrix(c("Country with Highest Emission",
-            "Min", 
-            "1st Qu.", 
-            "Median", 
-            "Mean", 
-            "3rd Qu.", 
-            "Max", results), nrow=7))
+  t(matrix(results, nrow=7))
 #   column = paste0("X", year)
 #   print(column)
 #   eTable[column] <- c(carbonEmissionDF$country[which(max(carbonEmissionDF[column]) == carbonEmissionDF[column])], 
