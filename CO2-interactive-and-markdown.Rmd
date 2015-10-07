@@ -6,10 +6,13 @@ output: html_document
 runtime: shiny
 ---
 
-The 
+
 
 ```{r, echo=FALSE, comment="Notes from rendering:"}
 source("responsiveMaps/helpers.R")
+```
+###Select the year you are interested in exploring.
+```{r echo=FALSE}
 inputPanel(
   
   sliderInput("year", label = "Year",
@@ -22,9 +25,22 @@ renderPlot({
   plotOutput(emission_map(var = data, legend.title = input$year)  , width="100%", height = "900px")
   
 })
+```
+
+```{r echo=F}
+fluidRow(
+  column(5,
+         h3(paste("The worst offenders")
+            ),
+         renderTable(worst_offenders_table(year=input$year))
+  ),
+  column(7,
+         renderPlot(allNationsPlot(year=input$year))
+         )
+)
 
 
 ```
-
 Source:
 All data comes from The World Bank (http://data.worldbank.org/indicator/EN.ATM.CO2E.PC)
+CO2 emission units in are metric tonnes per capita
