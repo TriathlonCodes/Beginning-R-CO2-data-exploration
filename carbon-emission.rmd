@@ -4,11 +4,12 @@ subtitle: "Years 1996 and 2010"
 author: "Stephanie Hutson"
 date: "October 4, 2015"
 output: html_document
+runtime: shiny
 ---
 
 ```{r echo=FALSE}
-  # install.packages('ggplot2')
-  # install.packages('plyr')
+#   install.packages('ggplot2')
+#   install.packages('plyr')
   library(ggplot2)
 ```
 Here I will explore co2 emission over 193 countries between 1996 and 2010 
@@ -55,7 +56,8 @@ But that's not very meaning full. Let's put them next to each other
   library(ggplot2)
   just1996 <- subset(carbonData, select=c(X1996..YR1996.))
   just2010 <- subset(carbonData, select=c(X2010..YR2010.))
-  twoYears <- data.frame(yearGroup = c(carbonData$X1996..YR1996., carbonData$X2010..YR2010.), year=c("1996","2010"))
+#   twoYears <- data.frame(yearGroup = c(carbonData$X1996..YR1996., carbonData$X2010..YR2010.), 
+#                          year= c("1996","2010"))
   
   plot1996 <- ggplot(data=just1996, aes('1996', X1996..YR1996.)) + 
     geom_boxplot()
@@ -63,11 +65,16 @@ But that's not very meaning full. Let's put them next to each other
   plot2010 <- ggplot(data=just2010, aes('2010', X2010..YR2010.)) + 
     geom_boxplot()
   
-  ggplot(data=twoYears, aes(twoYears$year, twoYears$yearGroup)) +
+  ggplot(data=carbonData, aes(twoYears$year, twoYears$yearGroup)) +
     geom_boxplot() + 
     coord_trans(ytrans = "sqrt")
+
+```
+
+```{r}
   
-    
+  ggplot(data= carbonData[3:18], aes(year), ) +
+    geom_boxplot()
   
 ```
 
